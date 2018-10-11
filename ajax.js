@@ -5,7 +5,12 @@ var fs = require('fs');
 var request = require('request');
 var mkdirp = require('mkdirp');
 
-var dataId = '903'
+var dataId = '906'
+
+mkdirp('./images/' + dataId, function (err) {
+    if (err) console.error(err)
+    else console.log('建立./images/' + dataId + '成功!');
+});
 
 superagent.post('https://www.erjinfu.com/invest/ajax_detail')
   .type('form')
@@ -22,7 +27,7 @@ superagent.post('https://www.erjinfu.com/invest/ajax_detail')
       items.push(fileUrl); 
       fileNames.push(fileUrl.substr(fileUrl.lastIndexOf('/') + 1))
     });
-    var dir = './images';
+    var dir = './images/' + dataId;
     for(var i = 0; i < items.length; i++){
       // setTimeout(function(){
       //   console.log('正在下载' + fileNames[i]);
