@@ -4,7 +4,7 @@ var fs = require('fs');
 var request = require('request');
 var mkdirp = require('mkdirp');
 // 引入获取投资列表页的list的方法
-var getList = require('./new.js');
+var getList = require('./getList.js');
 
 console.log(getList)
 var { promise } = getList;
