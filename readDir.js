@@ -5,5 +5,6 @@ fs.readdir("./images/906",function(err, files){
    if (err) {
        return console.error(err);
    }
-   console.log(files)
+   var arr = files.map((item)=>item.substring(6));
+   console.log(arr);
 });
