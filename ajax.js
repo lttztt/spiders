@@ -5,15 +5,14 @@ var fs = require('fs');
 var request = require('request');
 var mkdirp = require('mkdirp');
 
+var dataId = '903'
+
 superagent.post('https://www.erjinfu.com/invest/ajax_detail')
   .type('form')
-  .send({id: '903' })
+  .send({id: dataId })
   .end(function (err, sres) {
-    if (err) {
-      return next(err);
-    }
+    if (err) { return next(err); }
     var $ = cheerio.load(sres.text);
-    // console.log(sres)
     var items = [];
     var fileNames = [];
     var hostUrl = 'https://www.erjinfu.com'
@@ -23,7 +22,6 @@ superagent.post('https://www.erjinfu.com/invest/ajax_detail')
       items.push(fileUrl); 
       fileNames.push(fileUrl.substr(fileUrl.lastIndexOf('/') + 1))
     });
-    console.log(fileNames)
     var dir = './images';
     for(var i = 0; i < items.length; i++){
       // setTimeout(function(){
@@ -36,10 +34,9 @@ superagent.post('https://www.erjinfu.com/invest/ajax_detail')
       download(items[i], dir, fileNames[i])
       console.log('下载完成' + fileNames[i]);
     }
-
-    setTimeout(function(){
-      copyImg(fileNames);
-    }, 100)
+    // setTimeout(function(){
+    //   copyImg(fileNames);
+    // }, 100)
   });
 
 
@@ -64,26 +61,3 @@ var copyImg = function(list){
   }
 }
 
-// var app = express();
-// app.get('/', function (req, res, next) {
-//   superagent.post('https://www.erjinfu.com/invest/ajax_detail')
-//     .type('form')
-//     .send({id: '903' })
-//     .end(function (err, sres) {
-//       if (err) {
-//         return next(err);
-//       }
-//       var $ = cheerio.load(sres.text);
-//       // console.log(sres)
-//       var items = [];
-//       var hostUrl = 'https://www.erjinfu.com'
-//       $('#pic img').each(function (idx, element) {
-//         var $element = $(element);
-//         items.push(hostUrl + $element.attr('src'));
-//       });
-//       res.send(items);
-//     });
-// });
-// app.listen(5555, function () {
-//   console.log('app is listening at port 5555');
-// });
