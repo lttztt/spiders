@@ -1,11 +1,10 @@
-// var express = require('express');
 var cheerio = require('cheerio');
 var superagent = require('superagent');
 var fs = require('fs');
 var request = require('request');
 var mkdirp = require('mkdirp');
 
-var dataId = '906'
+var dataId = '901'
 
 mkdirp('./images/' + dataId, function (err) {
     if (err) console.error(err)
