@@ -1,22 +1,43 @@
-var fs = require("fs");     //添加fs模块
+let fs = require('fs');
+let path = require('path');
 
-var copyImg = function(list){
+fs.readdir("./images",function(err, files){
+   if (err) {
+       return console.error(err);
+   }
+   var arr = files.filter((item)=>{return item.length === 3});
+   console.log(arr);
+   for (var i = arr.length - 1; i >= 0; i--) {
+   	myCopy(arr[i]);
+   }
+});
 
-	for (var i = list.length - 1; i >= 0; i--) {
-		var fromImg = "./images/" + list[i];
-		var targleName = list[i].substr(list[i].lastIndexOf('_') + 1);
-		fs.readFile(fromImg, function(err,originBuffer){
-			fs.writeFile("./images/" + targleName, originBuffer,function(err){
-        if (err) {
-            console.log(err)
-        }
-	    });
-
-			var base64Img = originBuffer.toString("base64");                //base64 图片编码
-	    var decodeImg = new Buffer(base64Img,"base64");                  //new Buffer(string, encoding)
-	    fs.writeFile("./images/" + targleName ,decodeImg,function(err){        // 生成图片3(把base64位图片编码写入到图片文件)
-	        if (err) {console.log(err)}
-	    })
-		}
-	}
+var myCopy = function(dir){
+	console.log("打开"+ dir +"目录");
+	fs.readdir("./images/" + dir,function(err, files){
+	   if (err) {return console.error(err);}
+	   console.log('开始批量复制');
+	   files = files.filter(name => name.length > 10);
+	    for (var i = files.length - 1; i >= 0; i--) {
+	    	copyImg(dir, files[i]);
+	    }
+	});
 }
+
+
+
+
+var copyImg = function(dir, fileName){
+	let newName = fileName.substring(6);
+	let sourceFile = path.join(__dirname+'/images/' + dir + '/', fileName);
+	let destPath = path.join(__dirname,'/images/' + dir + '/', newName);
+	let readStream = fs.createReadStream(sourceFile);
+	let writeStream = fs.createWriteStream(destPath);
+	readStream.pipe(writeStream);
+	console.log(fileName + '复制为'+ newName +'完成!')
+}
+
+
+
+
+

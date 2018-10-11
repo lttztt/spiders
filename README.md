@@ -8,6 +8,6 @@
 
 ## 操作
 
-1. 先执行`node importTest.js`下载到images目录;
+1. 先执行`node downloadImg.js`下载到images目录;
 
-2. 在执行`node baseCopyImg.js`复制images下每个目录下的图片,并改为需要的名字;
+2. 在执行`node copyImg.js`复制images下每个目录下的图片,并改为需要的名字;
